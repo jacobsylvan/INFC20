@@ -17,6 +17,8 @@ namespace GymShark
                 conn_string.Password = "fanta123";
                 conn_string.Database = "solidsc_gymshark";
 
+                String HEJ = "JEIEFI";
+
                 MySqlConnection conn = new MySqlConnection(conn_string.ToString());
                 conn.Open();
                 return conn;
