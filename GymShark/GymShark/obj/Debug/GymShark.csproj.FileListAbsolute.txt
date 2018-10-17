@@ -1,0 +1,12 @@
+C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\obj\Debug\GymShark.Form1.resources
+C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\obj\Debug\GymShark.Properties.Resources.resources
+C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\obj\Debug\GymShark.csproj.GenerateResource.Cache
+C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\obj\Debug\GymShark.csproj.CoreCompileInputs.cache
+C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\obj\Debug\GymShark.csprojResolveAssemblyReference.cache
+C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\bin\Debug\GymShark.exe.config
+C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\bin\Debug\GymShark.exe
+C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\bin\Debug\GymShark.pdb
+C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\bin\Debug\MySql.Data.dll
+C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\bin\Debug\MySql.Data.xml
+C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\obj\Debug\GymShark.exe
+C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\obj\Debug\GymShark.pdb

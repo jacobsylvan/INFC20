@@ -1,0 +1,14 @@
+C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\WebbserviceUppgift2\obj\Release\WebbserviceUppgift2.csprojResolveAssemblyReference.cache
+C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\WebbserviceUppgift2\obj\Release\WebbserviceUppgift2.csproj.CoreCompileInputs.cache
+C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\WebbserviceUppgift2\bin\WebbserviceUppgift2.dll.config
+C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\WebbserviceUppgift2\bin\WebbserviceUppgift2.dll
+C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\WebbserviceUppgift2\bin\WebbserviceUppgift2.pdb
+C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\WebbserviceUppgift2\bin\GymShark.exe
+C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\WebbserviceUppgift2\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\WebbserviceUppgift2\bin\MySql.Data.dll
+C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\WebbserviceUppgift2\bin\GymShark.pdb
+C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\WebbserviceUppgift2\bin\GymShark.exe.config
+C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\WebbserviceUppgift2\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\WebbserviceUppgift2\bin\MySql.Data.xml
+C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\WebbserviceUppgift2\obj\Release\WebbserviceUppgift2.dll
+C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\WebbserviceUppgift2\obj\Release\WebbserviceUppgift2.pdb

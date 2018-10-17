@@ -1,0 +1,2 @@
+C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\WebApplication1\obj\Debug\WebServiceUppg2.csprojResolveAssemblyReference.cache
+C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\WebApplication1\obj\Debug\WebServiceUppg2.csproj.CoreCompileInputs.cache
