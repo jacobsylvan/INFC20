@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using MySql.Data.MySqlClient;
 
 namespace GymShark
 {
@@ -18,23 +17,23 @@ namespace GymShark
         }
         public static String AddCustomer(string firstName, string lastName, string ssn, string email, string phoneNumber)
         {
-            MySqlConnection conn = null;
+            SqlConnection conn = null;
             string query = "insert into customer(firstname, lastname, socialsecuritynumber, email, phonenumber) " +
                     "values('" + firstName + "', '" + lastName + "', '" + ssn + "', '" + email + "', '" + phoneNumber + "');";
             try
             {
                 conn = Connect.GetConnection();
-                MySqlCommand cmd = new MySqlCommand(query, conn);
+                SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.ExecuteNonQuery();
 
-              
+
                 return "Konto för " + firstName + " " + lastName + " lades till.";
 
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 throw new Exception("Det finns redan ett konto med detta personnummer och email", e);
-            
+
             }
             catch (Exception e)
             {
@@ -49,26 +48,28 @@ namespace GymShark
 
         public static Customer FindCustomer(string ssn)
         {
-            MySqlConnection conn = null;
+            SqlConnection conn = null;
             string query = "select * from customer where socialsecuritynumber='" + ssn + "';";
 
             try
             {
                 conn = Connect.GetConnection();
-                  MySqlCommand cmd = new MySqlCommand(query, conn);
+                SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.ExecuteNonQuery();
-                MySqlDataReader reader = cmd.ExecuteReader();
+                SqlDataReader reader = cmd.ExecuteReader();
                 Customer c = new Customer();
-                
+
                 while (reader.Read())
                 {
                     c = Customer.Create(reader);
                 }
                 return c;
-            } catch (MySqlException e)
+            }
+            catch (SqlException e)
             {
                 throw new Exception(standardErrorMessage, e);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw new Exception(standardErrorMessage, e);
             }
@@ -80,7 +81,7 @@ namespace GymShark
 
         public static String RemoveCustomer(string ssn)
         {
-            MySqlConnection conn = null;
+            SqlConnection conn = null;
             string query = "delete from customer where `socialsecuritynumber`='" + ssn + "';";
 
             try
@@ -89,7 +90,7 @@ namespace GymShark
 
                 if (FindCustomer(ssn) != null)
                 {
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    SqlCommand cmd = new SqlCommand(query, conn);
                     cmd.ExecuteNonQuery();
                     conn.Close();
                     conn.Dispose();
@@ -103,11 +104,12 @@ namespace GymShark
                 }
 
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 throw new Exception(standardErrorMessage, e);
 
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw new Exception(standardErrorMessage, e);
             }
@@ -115,15 +117,15 @@ namespace GymShark
 
         public static Account GetAccount(string username, string password)
         {
-            MySqlConnection conn = null;
+            SqlConnection conn = null;
             string query = "select * from account where username='" + username + "' and password='" + password + "';";
 
             try
             {
                 conn = Connect.GetConnection();
 
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                MySqlDataReader reader = cmd.ExecuteReader();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
                 Account owner = new Account();
                 Customer customerOwner = new Customer();
                 while (reader.Read())
@@ -134,14 +136,15 @@ namespace GymShark
                 }
                 return owner;
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 throw new Exception(standardErrorMessage, e);
             }
             catch (Exception e)
             {
                 throw new Exception(standardErrorMessage, e);
-            } finally
+            }
+            finally
             {
                 conn.Dispose();
             }
@@ -150,15 +153,15 @@ namespace GymShark
 
         public static Boolean CheckLogin(string username, string password)
         {
-            MySqlConnection conn = null;
+            SqlConnection conn = null;
             string query = "select * from account where username='" + username + "' and password='" + password + "';";
 
             try
             {
                 conn = Connect.GetConnection();
 
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                MySqlDataReader reader = cmd.ExecuteReader();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
 
                 Boolean loginStatus = reader.HasRows;
                 conn.Close();
@@ -168,10 +171,12 @@ namespace GymShark
                     return true;
                 }
                 else return false;
-            } catch (MySqlException e)
+            }
+            catch (SqlException e)
             {
                 throw new Exception(standardErrorMessage, e);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw new Exception(standardErrorMessage, e);
             }
@@ -179,28 +184,28 @@ namespace GymShark
             {
                 conn.Dispose();
             }
-            }
+        }
 
         public static String AddAccount(string username, string password, string customer_id)
         {
-            MySqlConnection conn = null;
+            SqlConnection conn = null;
             string query = "insert into account(username, password, customer_id) " +
                  "values('" + username.ToLower() + "', '" + password + "', '" + customer_id + "');";
 
             try
             {
                 conn = Connect.GetConnection();
-                   
 
-                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.ExecuteNonQuery();
-                
+
                 return "Konto med användarnamn: " + username + " lades till.";
 
             }
 
 
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 throw new Exception("Det angivna personnumret och email finns redan i systemet", e);
 
@@ -209,7 +214,8 @@ namespace GymShark
             {
                 throw new Exception(standardErrorMessage, e);
 
-            } finally
+            }
+            finally
             {
                 conn.Dispose();
             }
@@ -217,29 +223,31 @@ namespace GymShark
 
         public static Customer FindCustomerWithUsername(string username)
         {
-            MySqlConnection conn = null;
+            SqlConnection conn = null;
             string query = "select * from customer c join account a on c.id = a.customer_id where username='" + username + "';";
 
             try
             {
                 conn = Connect.GetConnection();
 
-                MySqlCommand cmd = new MySqlCommand(query, conn);
+                SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.ExecuteNonQuery();
-                MySqlDataReader reader = cmd.ExecuteReader();
+                SqlDataReader reader = cmd.ExecuteReader();
                 Customer c = new Customer();
 
                 while (reader.Read())
                 {
                     c = Customer.Create(reader);
                 }
-                
+
                 return c;
-            } catch (MySqlException e)
+            }
+            catch (SqlException e)
             {
                 throw new Exception(standardErrorMessage, e);
-               
-            } catch (Exception e)
+
+            }
+            catch (Exception e)
             {
                 throw new Exception(standardErrorMessage, e);
             }
@@ -265,24 +273,26 @@ namespace GymShark
                 "on s.type_id = st.id " +
                 "where cs.customer_id = '" + userId + "'" +
                 "order by s.date, s.time asc;";
-            MySqlConnection conn = null;
+            SqlConnection conn = null;
             try
             {
                 conn = Connect.GetConnection();
-                MySqlCommand cmd = new MySqlCommand(query, conn);
+                SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.ExecuteNonQuery();
-                MySqlDataReader reader = cmd.ExecuteReader();
+                SqlDataReader reader = cmd.ExecuteReader();
                 List<Session> sessionList = new List<Session>();
                 while (reader.Read())
                 {
                     sessionList.Add(Session.Create(reader));
                 }
-              
+
                 return sessionList;
-            } catch (MySqlException e)
+            }
+            catch (SqlException e)
             {
                 throw new Exception(standardErrorMessage, e);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw new Exception(standardErrorMessage, e);
             }
@@ -304,13 +314,13 @@ namespace GymShark
                     "on s.place_id=p.id                " +
                     "where s.date = '" + selectedDate + "'" +
                     "order by s.time asc;";
-            MySqlConnection conn = null;
+            SqlConnection conn = null;
             try
             {
                 conn = Connect.GetConnection();
-                MySqlCommand cmd = new MySqlCommand(query, conn);
+                SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.ExecuteNonQuery();
-                MySqlDataReader reader = cmd.ExecuteReader();
+                SqlDataReader reader = cmd.ExecuteReader();
                 List<Session> sessionList = new List<Session>();
 
                 while (reader.Read())
@@ -318,31 +328,33 @@ namespace GymShark
                     sessionList.Add(Session.Create(reader));
                 }
                 return sessionList;
-            } catch (MySqlException e)
+            }
+            catch (SqlException e)
             {
                 throw new Exception(standardErrorMessage, e);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw new Exception(standardErrorMessage, e);
             }
             finally
             {
-                 conn.Dispose();
-                
-                
+                conn.Dispose();
+
+
             }
         }
- 
+
         public static Boolean IsBookedOnSession(string sessionId, string customerId)
         {
-            MySqlConnection conn = null;
+            SqlConnection conn = null;
             try
             {
                 conn = Connect.GetConnection();
                 string query = "select * from customer_session where customer_id='" + customerId + "' and session_id='" + sessionId + "';";
 
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                MySqlDataReader reader = cmd.ExecuteReader();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
 
                 Boolean bookedOnSessionStatus = reader.HasRows;
                 conn.Close();
@@ -352,10 +364,12 @@ namespace GymShark
                     return true;
                 }
                 else return false;
-            } catch (MySqlException e)
+            }
+            catch (SqlException e)
             {
                 throw new Exception(standardErrorMessage, e);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw new Exception(standardErrorMessage, e);
             }
@@ -367,19 +381,21 @@ namespace GymShark
 
         public static void BookSession(string sessionId, string customerId)
         {
-            MySqlConnection conn = null;
+            SqlConnection conn = null;
             try
             {
 
                 conn = Connect.GetConnection();
                 string query = "insert into customer_session (customer_id, session_id) " +
                                " values('" + customerId + "', '" + sessionId + "');";
-                MySqlCommand cmd = new MySqlCommand(query, conn);
+                SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.ExecuteNonQuery();
-            } catch (MySqlException e)
+            }
+            catch (SqlException e)
             {
                 throw new Exception(standardErrorMessage, e);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw new Exception(standardErrorMessage, e);
             }
@@ -391,60 +407,28 @@ namespace GymShark
 
         public static void CancelSession(string sessionId, string customerId)
         {
-            MySqlConnection conn = null;
+            SqlConnection conn = null;
             try
             {
                 conn = Connect.GetConnection();
                 string query = "delete from `customer_session` where `session_id` = " + sessionId + " and `customer_id` = " + customerId;
 
 
-                MySqlCommand cmd = new MySqlCommand(query, conn);
+                SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.ExecuteNonQuery();
-            } catch (MySqlException e)
+            }
+            catch (SqlException e)
             {
                 throw new Exception(standardErrorMessage, e);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw new Exception(standardErrorMessage, e);
             }
             finally
             {
                 conn.Dispose();
-            }
-        }
-
-        public static List<News> GetNewsfeed()
-        {
-            MySqlConnection conn = null;
-            string query = "SELECT * FROM newsfeed order by date LIMIT 3";
-
-            try
-            {
-                conn = Connect.GetConnection();
-                List<News> newsfeed = new List<News>();
-                News n = new News();
-
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                cmd.ExecuteNonQuery();
-                MySqlDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    newsfeed.Add(News.Create(reader));
-                }
-              
-                return newsfeed;
-            } catch (SqlException e)
-            {
-                throw new Exception(standardErrorMessage, e);
-            } catch (Exception e)
-            {
-                throw new Exception(standardErrorMessage, e);
-            }
-            finally
-            {
-                conn.Dispose();
-            }
             }
         }
     }
+}

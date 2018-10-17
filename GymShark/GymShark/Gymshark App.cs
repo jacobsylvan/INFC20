@@ -24,57 +24,36 @@ namespace GymShark
 
         private void GetMySessions()
         {
-            
-                listMySessions.Rows.Clear();
-                listMySessions.Refresh();
-                lblFeedback.Text = "";
 
-                listMySessions.ColumnCount = 7;
-                listMySessions.Columns[0].Name = "Datum";
-                listMySessions.Columns[1].Name = "Tid";
-                listMySessions.Columns[2].Name = "Pass";
-                listMySessions.Columns[3].Name = "Plats";
-                listMySessions.Columns[4].Name = "Instruktör";
-                listMySessions.Columns[5].Name = "Längd (min)";
-                listMySessions.Columns[6].Name = "SessionId";
-                listMySessions.Columns["SessionId"].Visible = false;
-          
-                var result = Controller.GetSessionsForUser(cr.CurrentUser.CustomerId.Id.ToString());
+            listMySessions.Rows.Clear();
+            listMySessions.Refresh();
+            lblFeedback.Text = "";
+
+            listMySessions.ColumnCount = 7;
+            listMySessions.Columns[0].Name = "Datum";
+            listMySessions.Columns[1].Name = "Tid";
+            listMySessions.Columns[2].Name = "Pass";
+            listMySessions.Columns[3].Name = "Plats";
+            listMySessions.Columns[4].Name = "Instruktör";
+            listMySessions.Columns[5].Name = "Längd (min)";
+            listMySessions.Columns[6].Name = "SessionId";
+            listMySessions.Columns["SessionId"].Visible = false;
+
+            var result = Controller.GetSessionsForUser(cr.CurrentUser.CustomerId.Id.ToString());
 
 
-                if (result.Count > 0)
-                {
-                    foreach (Session s in result)
-                    {
-                        string[] row = new string[] { s.Date.ToString("yyyy-MM-dd"), s.StartTime, s.SessionType.Name.ToString(), s.Place.Name.ToString(), s.Instructor.Name.ToString(), s.Duration.ToString(), s.SessionId.ToString() };
-                        listMySessions.Rows.Add(row);
-                    }
-               
-            }
-               else lblFeedback.Text = "Du har inga inbokade pass.";
-        }
-
-        private void StartNews()
-        {
-
-            List<News> news = new List<News>();
-            news = Controller.GetNewsfeed();
-
-            if (news.Count == 0)
+            if (result.Count > 0)
             {
-                MessageBox.Show("Inga nyheter finns");
-            }
-            else
-            {
-                foreach (News n in news)
+                foreach (Session s in result)
                 {
-                    lblNewsName.Text = n.Name;
-                    lblNewsContent.Text = n.Content;
-                    lblNewsDate.Text = n.Date;
-
+                    string[] row = new string[] { s.Date.ToString("yyyy-MM-dd"), s.StartTime, s.SessionType.Name.ToString(), s.Place.Name.ToString(), s.Instructor.Name.ToString(), s.Duration.ToString(), s.SessionId.ToString() };
+                    listMySessions.Rows.Add(row);
                 }
+
             }
+            else lblFeedback.Text = "Du har inga inbokade pass.";
         }
+
 
         private void tabBooking_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -91,7 +70,6 @@ namespace GymShark
         private void Gymshark_App_Load(object sender, EventArgs e)
         {
             this.AcceptButton = btnLogin;
-            StartNews();
 
         }
 
@@ -140,9 +118,9 @@ namespace GymShark
             {
                 lblFeedback.Text = ex.Message;
             }
-       } 
+        }
 
-        
+
 
         private void btnRegister_Click(object sender, EventArgs e)
         {
@@ -319,7 +297,7 @@ namespace GymShark
 
                 lblFeedback.Text = ex.Message;
             }
-            }
+        }
 
         private void dateTimePicker_ValueChanged(object sender, EventArgs e)
         {
@@ -404,7 +382,7 @@ namespace GymShark
             catch (Exception ex)
             {
                 lblFeedback.Text = ex.Message;
-                }
             }
         }
     }
+}

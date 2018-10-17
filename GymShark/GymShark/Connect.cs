@@ -1,38 +1,32 @@
 ﻿using MySql.Data;
-using MySql.Data.MySqlClient;
 using System;
+using System.Data.SqlClient;
 using System.Windows.Forms;
 namespace GymShark
 {
     public class Connect
     {
 
-        public static MySqlConnection GetConnection()
+        public static SqlConnection GetConnection()
         {
             try
             {
-                MySqlConnectionStringBuilder conn_string = new MySqlConnectionStringBuilder();
-                conn_string.Server = "212.97.132.78";
-                conn_string.UserID = "solidsc_gymshark";
-                conn_string.Password = "fanta123";
-                conn_string.Database = "solidsc_gymshark";
 
-                String HEJ = "JEIEFI";
-
-                MySqlConnection conn = new MySqlConnection(conn_string.ToString());
+                SqlConnection conn = new System.Data.SqlClient.SqlConnection("Server= localhost; Database= gymshark; Integrated Security=True;");
                 conn.Open();
+                SqlCommand cmd;
                 return conn;
             }
-            catch (MySqlException e)
+            catch (SqlException e)
             {
                 throw new Exception("Kunde inte ansluta till databasen, vänligen kontakta receptionen för vidare hjälp.", e);
-            } 
+            }
             catch (Exception e)
             {
                 throw new Exception("Kunde inte ansluta till databasen, vänligen kontakta receptionen för vidare hjälp.", e);
             }
-            
-           
+
+
         }
     }
 }
