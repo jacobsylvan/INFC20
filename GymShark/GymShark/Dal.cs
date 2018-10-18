@@ -417,12 +417,16 @@ namespace GymShark
         public static Boolean IsBookedOnSession(string sessionId, string customerId)
         {
             SqlConnection conn = null;
+            SqlParameter workParam = null;
             try
+                
             {
                 conn = Connect.GetConnection();
-                string query = "select * from customerSession where customerId='" + customerId + "' and sessionId='" + sessionId + "';";
-
-                SqlCommand cmd = new SqlCommand(query, conn);
+                SqlCommand cmd = new SqlCommand("dbo.user_IsBookedOnSession", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                workParam = cmd.Parameters.AddWithValue("@sessionId", sessionId);
+                workParam = cmd.Parameters.AddWithValue("@customerId", customerId);
+                cmd.ExecuteNonQuery();
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 Boolean bookedOnSessionStatus = reader.HasRows;
@@ -486,14 +490,19 @@ namespace GymShark
         public static void CancelSession(string sessionId, string customerId)
         {
             SqlConnection conn = null;
+            SqlParameter workParam = null;
             try
             {
-                conn = Connect.GetConnection();
+
                 string query = "delete from customerSession where sessionId = " + sessionId + " and customerId = " + customerId;
 
-
-                SqlCommand cmd = new SqlCommand(query, conn);
+                conn = Connect.GetConnection();
+                SqlCommand cmd = new SqlCommand("dbo.user_CancelSession", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                workParam = cmd.Parameters.AddWithValue("@sessionId", sessionId);
+                workParam = cmd.Parameters.AddWithValue("@customerId", customerId);
                 cmd.ExecuteNonQuery();
+
             }
             catch (SqlException e)
             {
