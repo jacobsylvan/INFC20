@@ -10,7 +10,7 @@ namespace GymShark
         private DateTime date;
         private string startTime;
         private int duration;
-        private Boolean isFinished;
+        private int isFinished;
         private Instructor instructor;
         private Place place;
         private SessionType sessionType;
@@ -39,7 +39,7 @@ namespace GymShark
             get { return duration; }
             set { duration = value; }
         }
-        public Boolean IsFinished{
+        public int IsFinished{
             get { return isFinished; }
             set { isFinished = value; }
         }
@@ -64,20 +64,25 @@ namespace GymShark
             SessionType sessionType = new SessionType();
 
             session.SessionId = (Int16)record[0];
+            Console.WriteLine(session.SessionId);
             session.Date = (DateTime)record[1];
+            Console.WriteLine(session.Date);
             session.StartTime = record[2].ToString();
-            session.Duration = (int)record[3];
-            session.IsFinished = (bool)record[4];
-            instructor.Id = (Int16)record[5];
-            instructor.Name = record[6].ToString();
-            place.Id = (Int16)record[7];
-            place.Name = record[8].ToString();
-            sessionType.Id = (Int16)record[9];
-            sessionType.Name = record[10].ToString();
+            Console.WriteLine(session.StartTime);
+            session.IsFinished = (int)record[3];
+            Console.WriteLine(session.IsFinished);
+            instructor.Id = (Int16)record[4];
+            Console.WriteLine(instructor.Id);
+            instructor.Name = record[5].ToString();
+            Console.WriteLine(instructor.Name);
+            place.Id = (Int16)record[6];
+            place.Name = record[7].ToString();
+            sessionType.Id = (Int16)record[8];
+            sessionType.Name = record[9].ToString();
             session.Instructor = instructor;
             session.Place = place;
             session.SessionType = sessionType;
-
+            
             return session;
         }
     

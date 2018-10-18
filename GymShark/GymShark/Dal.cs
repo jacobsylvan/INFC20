@@ -18,25 +18,38 @@ namespace GymShark
         public static String AddCustomer(string firstName, string lastName, string ssn, string email, string phoneNumber)
         {
             SqlConnection conn = null;
-            string query = "insert into customer(firstname, lastname, socialsecuritynumber, email, phonenumber) " +
-                    "values('" + firstName + "', '" + lastName + "', '" + ssn + "', '" + email + "', '" + phoneNumber + "');";
+            SqlParameter workParam = null;
+            ////        "values('" + firstName + "', '" + lastName + "', '" + ssn + "', '" + email + "', '" + phoneNumber + "');";
             try
             {
                 conn = Connect.GetConnection();
-                SqlCommand cmd = new SqlCommand(query, conn);
+                SqlCommand cmd = new SqlCommand("dbo.user_AddCustomer", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                workParam = cmd.Parameters.AddWithValue("@firstName", firstName);
+                workParam = cmd.Parameters.AddWithValue("@lastName", lastName);
+                workParam = cmd.Parameters.AddWithValue("@socialSecurityNumber", ssn);
+                workParam = cmd.Parameters.AddWithValue("@email", email);
+                workParam = cmd.Parameters.AddWithValue("@phoneNumber", phoneNumber);
+
+                int rows = cmd.ExecuteNonQuery();
+                /*SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.ExecuteNonQuery();
 
-
+    */
                 return "Konto för " + firstName + " " + lastName + " lades till.";
 
             }
             catch (SqlException e)
             {
+                Console.WriteLine(e.Message);
+
                 throw new Exception("Det finns redan ett konto med detta personnummer och email", e);
 
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
+
                 throw new Exception(standardErrorMessage, e);
 
             }
@@ -49,12 +62,16 @@ namespace GymShark
         public static Customer FindCustomer(string ssn)
         {
             SqlConnection conn = null;
+            SqlParameter workParam = null;
+
             string query = "select * from customer where socialsecuritynumber='" + ssn + "';";
 
             try
             {
                 conn = Connect.GetConnection();
-                SqlCommand cmd = new SqlCommand(query, conn);
+                SqlCommand cmd = new SqlCommand("dbo.user_FindCustomerSsn", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                workParam = cmd.Parameters.AddWithValue("@socialSecurityNumber", ssn);
                 cmd.ExecuteNonQuery();
                 SqlDataReader reader = cmd.ExecuteReader();
                 Customer c = new Customer();
@@ -67,10 +84,14 @@ namespace GymShark
             }
             catch (SqlException e)
             {
+                Console.WriteLine(e.Message);
+
                 throw new Exception(standardErrorMessage, e);
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
+
                 throw new Exception(standardErrorMessage, e);
             }
             finally
@@ -82,6 +103,7 @@ namespace GymShark
         public static String RemoveCustomer(string ssn)
         {
             SqlConnection conn = null;
+            SqlParameter workParam = null;
             string query = "delete from customer where `socialsecuritynumber`='" + ssn + "';";
 
             try
@@ -90,7 +112,10 @@ namespace GymShark
 
                 if (FindCustomer(ssn) != null)
                 {
-                    SqlCommand cmd = new SqlCommand(query, conn);
+                    conn = Connect.GetConnection();
+                    SqlCommand cmd = new SqlCommand("dbo.user_DeleteCustomerSsn", conn);
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    workParam = cmd.Parameters.AddWithValue("@socialSecurityNumber", ssn);
                     cmd.ExecuteNonQuery();
                     conn.Close();
                     conn.Dispose();
@@ -106,11 +131,15 @@ namespace GymShark
             }
             catch (SqlException e)
             {
+                Console.WriteLine(e.Message);
+
                 throw new Exception(standardErrorMessage, e);
 
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
+
                 throw new Exception(standardErrorMessage, e);
             }
         }
@@ -118,30 +147,37 @@ namespace GymShark
         public static Account GetAccount(string username, string password)
         {
             SqlConnection conn = null;
-            string query = "select * from account where username='" + username + "' and password='" + password + "';";
+            SqlParameter workParam = null;
+            string query = "select * from account where customerUsername='" + username + "' and customerPassword='" + password + "';";
 
             try
             {
                 conn = Connect.GetConnection();
-
-                SqlCommand cmd = new SqlCommand(query, conn);
+                SqlCommand cmd = new SqlCommand("dbo.user_GetAccount", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                workParam = cmd.Parameters.AddWithValue("@customerUsername", username);
+                workParam = cmd.Parameters.AddWithValue("@customerPassword", password);
                 SqlDataReader reader = cmd.ExecuteReader();
                 Account owner = new Account();
                 Customer customerOwner = new Customer();
                 while (reader.Read())
                 {
                     owner.UserName = reader[0].ToString();
-                    customerOwner.Id = reader[3].ToString();
+                    customerOwner.Id = reader[2].ToString();
                     owner.CustomerId = customerOwner;
                 }
                 return owner;
             }
             catch (SqlException e)
             {
+                Console.WriteLine(e.Message);
+
                 throw new Exception(standardErrorMessage, e);
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
+
                 throw new Exception(standardErrorMessage, e);
             }
             finally
@@ -154,13 +190,16 @@ namespace GymShark
         public static Boolean CheckLogin(string username, string password)
         {
             SqlConnection conn = null;
-            string query = "select * from account where username='" + username + "' and password='" + password + "';";
+            SqlParameter workParam = null;
+            string query = "select * from account where customerUsername='" + username + "' and customerPassword='" + password + "';";
 
             try
             {
                 conn = Connect.GetConnection();
-
-                SqlCommand cmd = new SqlCommand(query, conn);
+                SqlCommand cmd = new SqlCommand("dbo.user_GetAccount", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                workParam = cmd.Parameters.AddWithValue("@customerUsername", username);
+                workParam = cmd.Parameters.AddWithValue("@customerPassword", password);
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 Boolean loginStatus = reader.HasRows;
@@ -174,10 +213,13 @@ namespace GymShark
             }
             catch (SqlException e)
             {
+                Console.WriteLine(e.Message);
+
                 throw new Exception(standardErrorMessage, e);
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 throw new Exception(standardErrorMessage, e);
             }
             finally
@@ -186,18 +228,22 @@ namespace GymShark
             }
         }
 
-        public static String AddAccount(string username, string password, string customer_id)
+        public static String AddAccount(string username, string password, string customerId)
         {
             SqlConnection conn = null;
-            string query = "insert into account(username, password, customer_id) " +
-                 "values('" + username.ToLower() + "', '" + password + "', '" + customer_id + "');";
+            SqlParameter workParam = null;
+            string query = "insert into account(customerUsername, customerPassword, customerId) " +
+                 "values('" + username.ToLower() + "', '" + password + "', '" + customerId + "');";
 
             try
             {
                 conn = Connect.GetConnection();
+                SqlCommand cmd = new SqlCommand("dbo.user_AddAccount", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                workParam = cmd.Parameters.AddWithValue("@customerUsername", username.ToLower());
+                workParam = cmd.Parameters.AddWithValue("@customerPassword", password);
+                workParam = cmd.Parameters.AddWithValue("@customerId", customerId);
 
-
-                SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.ExecuteNonQuery();
 
                 return "Konto med användarnamn: " + username + " lades till.";
@@ -207,11 +253,14 @@ namespace GymShark
 
             catch (SqlException e)
             {
-                throw new Exception("Det angivna personnumret och email finns redan i systemet", e);
+                Console.WriteLine(e.Message);
 
+                throw new Exception("Det angivna personnumret och email finns redan i systemet", e);
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
+
                 throw new Exception(standardErrorMessage, e);
 
             }
@@ -224,13 +273,15 @@ namespace GymShark
         public static Customer FindCustomerWithUsername(string username)
         {
             SqlConnection conn = null;
-            string query = "select * from customer c join account a on c.id = a.customer_id where username='" + username + "';";
+            SqlParameter workParam = null;
+            string query = "select * from customer c join account a on c.customerId = a.customerId where customerUsername='" + username + "';";
 
             try
             {
                 conn = Connect.GetConnection();
-
-                SqlCommand cmd = new SqlCommand(query, conn);
+                SqlCommand cmd = new SqlCommand("dbo.user_FindCustomerWithUsername", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                workParam = cmd.Parameters.AddWithValue("@username", username.ToLower());
                 cmd.ExecuteNonQuery();
                 SqlDataReader reader = cmd.ExecuteReader();
                 Customer c = new Customer();
@@ -244,11 +295,15 @@ namespace GymShark
             }
             catch (SqlException e)
             {
+                Console.WriteLine(e.Message);
+
                 throw new Exception(standardErrorMessage, e);
 
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
+
                 throw new Exception(standardErrorMessage, e);
             }
             finally
@@ -259,25 +314,28 @@ namespace GymShark
 
         public static List<Session> GetSessionsForUser(string userId)
         {
-            string query = "select cs.session_id, s.date, s.time, s.duration, s.isfinished, i.id, i.name, p.id, p.name, st.id, st.name " +
-                "from customer_session cs " +
+            string query = "select cs.sessionId, s.sessionDate, s.sessionTime, s.isfinished, i.instructorId, i.instructorName, p.placeId, p.placeName, st.sessionTypeId, st.sessionTypeName " +
+                "from customerSession cs " +
                 "join customer c " +
-                "on cs.customer_id = c.id " +
+                "on cs.customerId = c.customerI " +
                 "join session s " +
-                "on cs.session_id = s.id " +
+                "on cs.sessionId = s.sessionId " +
                 "join instructor i " +
-                "on s.instructor_id = i.id " +
+                "on s.instructorId = i.instructorId " +
                 "join place p " +
-                "on s.place_id = p.id " +
+                "on s.placeId = p.placeId " +
                 "join sessiontype st " +
-                "on s.type_id = st.id " +
-                "where cs.customer_id = '" + userId + "'" +
-                "order by s.date, s.time asc;";
+                "on s.sessionTypeId = st.sessionTypeId " +
+                "where cs.customerId = '" + userId + "'" +
+                "order by s.sessionDate, s.sesssionTime asc;";
             SqlConnection conn = null;
+            SqlParameter workParam = null;
             try
             {
                 conn = Connect.GetConnection();
-                SqlCommand cmd = new SqlCommand(query, conn);
+                SqlCommand cmd = new SqlCommand("dbo.user_GetSessionsForUser", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                workParam = cmd.Parameters.AddWithValue("@customerId", userId);
                 cmd.ExecuteNonQuery();
                 SqlDataReader reader = cmd.ExecuteReader();
                 List<Session> sessionList = new List<Session>();
@@ -290,10 +348,14 @@ namespace GymShark
             }
             catch (SqlException e)
             {
+                Console.WriteLine(e.Message);
+
                 throw new Exception(standardErrorMessage, e);
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
+
                 throw new Exception(standardErrorMessage, e);
             }
             finally
@@ -304,21 +366,24 @@ namespace GymShark
 
         public static List<Session> GetSessionsForDate(string selectedDate)
         {
-            string query = "select s.id, s.date, s.time, s.duration, s.isfinished, i.id, i.name, p.id, p.name, t.id, t.name " +
+            string query = "select s.sessionId, s.sessionDate, s.sessionTime, s.isfinished, i.instructorId, i.instructorName, p.placeId, p.placeName, t.sessionTypeId, t.sessionName " +
                     "from session s " +
                     "join instructor i " +
-                    "on s.instructor_id = i.id " +
+                    "on s.instructorId = i.instructorId " +
                     "join sessiontype t " +
-                    "on s.type_id = t.id " +
+                    "on s.sessionTypeId = t.sessionTypeId " +
                     "join place p " +
-                    "on s.place_id=p.id                " +
-                    "where s.date = '" + selectedDate + "'" +
-                    "order by s.time asc;";
+                    "on s.placeId=p.placeId                " +
+                    "where s.sessionDate = '" + selectedDate + "'" +
+                    "order by s.sessionTime asc;";
             SqlConnection conn = null;
+            SqlParameter workParam = null;
             try
             {
                 conn = Connect.GetConnection();
-                SqlCommand cmd = new SqlCommand(query, conn);
+                SqlCommand cmd = new SqlCommand("dbo.user_GetSessionsDate", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                workParam = cmd.Parameters.AddWithValue("@searchDate", selectedDate);
                 cmd.ExecuteNonQuery();
                 SqlDataReader reader = cmd.ExecuteReader();
                 List<Session> sessionList = new List<Session>();
@@ -331,10 +396,14 @@ namespace GymShark
             }
             catch (SqlException e)
             {
+                Console.WriteLine(e.Message);
+
                 throw new Exception(standardErrorMessage, e);
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
+
                 throw new Exception(standardErrorMessage, e);
             }
             finally
@@ -351,7 +420,7 @@ namespace GymShark
             try
             {
                 conn = Connect.GetConnection();
-                string query = "select * from customer_session where customer_id='" + customerId + "' and session_id='" + sessionId + "';";
+                string query = "select * from customerSession where customerId='" + customerId + "' and sessionId='" + sessionId + "';";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -367,10 +436,14 @@ namespace GymShark
             }
             catch (SqlException e)
             {
+                Console.WriteLine(e.Message);
+
                 throw new Exception(standardErrorMessage, e);
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
+
                 throw new Exception(standardErrorMessage, e);
             }
             finally
@@ -386,17 +459,22 @@ namespace GymShark
             {
 
                 conn = Connect.GetConnection();
-                string query = "insert into customer_session (customer_id, session_id) " +
+                string query = "insert into customerSession (customerId, sessionId) " +
                                " values('" + customerId + "', '" + sessionId + "');";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.ExecuteNonQuery();
             }
             catch (SqlException e)
             {
+                Console.WriteLine(e.Message);
+
                 throw new Exception(standardErrorMessage, e);
             }
             catch (Exception e)
             {
+
+                Console.WriteLine(e.Message);
+
                 throw new Exception(standardErrorMessage, e);
             }
             finally
@@ -411,7 +489,7 @@ namespace GymShark
             try
             {
                 conn = Connect.GetConnection();
-                string query = "delete from `customer_session` where `session_id` = " + sessionId + " and `customer_id` = " + customerId;
+                string query = "delete from `customerSession` where `sessionId` = " + sessionId + " and `customerId` = " + customerId;
 
 
                 SqlCommand cmd = new SqlCommand(query, conn);
@@ -419,10 +497,14 @@ namespace GymShark
             }
             catch (SqlException e)
             {
+                Console.WriteLine(e.Message);
+
                 throw new Exception(standardErrorMessage, e);
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
+
                 throw new Exception(standardErrorMessage, e);
             }
             finally

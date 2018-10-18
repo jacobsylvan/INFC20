@@ -48,7 +48,7 @@ namespace GymShark
         {
             return new Customer
             {
-                Id = record["id"].ToString(),
+                Id = record["customerId"].ToString(),
                 FirstName = record["firstname"].ToString(),
                 LastName = record["lastname"].ToString(),
                 Email = record["email"].ToString(),

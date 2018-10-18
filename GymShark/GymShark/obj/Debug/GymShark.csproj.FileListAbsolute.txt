@@ -10,3 +10,15 @@ C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\bin\Debug\MyS
 C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\bin\Debug\MySql.Data.xml
 C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\obj\Debug\GymShark.exe
 C:\Users\Jacob\Documents\GitHub\sylviz-dreamteam\GymShark\GymShark\obj\Debug\GymShark.pdb
+C:\Users\Daniel\Documents\GitHub\INFC20\GymShark\GymShark\obj\Debug\GymShark.csprojAssemblyReference.cache
+C:\Users\Daniel\Documents\GitHub\INFC20\GymShark\GymShark\obj\Debug\GymShark.Form1.resources
+C:\Users\Daniel\Documents\GitHub\INFC20\GymShark\GymShark\obj\Debug\GymShark.Properties.Resources.resources
+C:\Users\Daniel\Documents\GitHub\INFC20\GymShark\GymShark\obj\Debug\GymShark.csproj.GenerateResource.cache
+C:\Users\Daniel\Documents\GitHub\INFC20\GymShark\GymShark\obj\Debug\GymShark.csproj.CoreCompileInputs.cache
+C:\Users\Daniel\Documents\GitHub\INFC20\GymShark\GymShark\obj\Debug\GymShark.exe
+C:\Users\Daniel\Documents\GitHub\INFC20\GymShark\GymShark\obj\Debug\GymShark.pdb
+C:\Users\Daniel\Documents\GitHub\INFC20\GymShark\GymShark\bin\Debug\GymShark.exe.config
+C:\Users\Daniel\Documents\GitHub\INFC20\GymShark\GymShark\bin\Debug\GymShark.exe
+C:\Users\Daniel\Documents\GitHub\INFC20\GymShark\GymShark\bin\Debug\GymShark.pdb
+C:\Users\Daniel\Documents\GitHub\INFC20\GymShark\GymShark\bin\Debug\MySql.Data.xml
+C:\Users\Daniel\Documents\GitHub\INFC20\GymShark\GymShark\obj\Debug\GymShark.csproj.CopyComplete

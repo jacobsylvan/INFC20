@@ -81,10 +81,7 @@ namespace GymShark
         {
             Dal.CancelSession(sessionId, customerId);
         }
-        public static List<News> GetNewsfeed()
-        {
-            return Dal.GetNewsfeed();
-        }
+       
         
     }
 }
