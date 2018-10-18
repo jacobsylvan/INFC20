@@ -489,7 +489,7 @@ namespace GymShark
             try
             {
                 conn = Connect.GetConnection();
-                string query = "delete from `customerSession` where `sessionId` = " + sessionId + " and `customerId` = " + customerId;
+                string query = "delete from customerSession where sessionId = " + sessionId + " and customerId = " + customerId;
 
 
                 SqlCommand cmd = new SqlCommand(query, conn);

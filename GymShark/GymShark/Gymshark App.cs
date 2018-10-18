@@ -105,7 +105,6 @@ namespace GymShark
                     txtInputPassword.Text = "";
 
                     tabBooking.Visible = true;
-                    panelNews.Visible = false;
                     lblHem.Text = "Bokningssystem:";
                 }
                 else
@@ -126,7 +125,6 @@ namespace GymShark
         {
             panelLogin.Visible = false; // hide login panel
             panelRegister.Visible = true; // show register panel
-            panelNews.Visible = false; // hide news panel
 
             lblHem.Text = "Registrera:";
 
@@ -214,7 +212,6 @@ namespace GymShark
         {
             panelRegister.Visible = false;
             panelLogin.Visible = true;
-            panelNews.Visible = true;
 
             lblHem.Text = "Logga in:";
 
@@ -232,7 +229,6 @@ namespace GymShark
                     panelLogin.Visible = true;
                     panelLoggedIn.Visible = false;
                     tabBooking.Visible = false;
-                    panelNews.Visible = true;
 
                     lblHem.Text = "Logga in:";
                     lblProfilName.Text = "";
@@ -257,7 +253,6 @@ namespace GymShark
             panelLogin.Visible = true;
             panelLoggedIn.Visible = false;
             tabBooking.Visible = false;
-            panelNews.Visible = true;
 
             lblFeedback.Text = "Du har nu loggats ut.";
             lblHem.Text = "Logga in:";
