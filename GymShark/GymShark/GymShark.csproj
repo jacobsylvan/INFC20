@@ -58,7 +58,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller.cs" />
-    <Compile Include="ErrorHandling.cs" />
     <Compile Include="Gymshark App.cs">
       <SubType>Form</SubType>
     </Compile>

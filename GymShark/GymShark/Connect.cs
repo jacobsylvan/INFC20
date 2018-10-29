@@ -14,7 +14,6 @@ namespace GymShark
 
                 SqlConnection conn = new System.Data.SqlClient.SqlConnection("Server= localhost; Database= gymshark; Integrated Security=True;");
                 conn.Open();
-                SqlCommand cmd;
                 return conn;
             }
             catch (SqlException e)
